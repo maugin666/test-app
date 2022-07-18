@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React from "react";
 import styles from './Table.module.css';
 
 
@@ -36,16 +36,32 @@ const Table = (props) => {
             field: 'email'
         }
     ];
+
+    const renderBodyCols = (item): JSX.Element => {
+        return mockHead.map(header => {
+            return <td key={header.field} className={styles.tableCell}>{item[header.field]}</td>
+        });
+    };
+    const renderBodyRows = (item): JSX.Element => {
+        return <tr key={item.id}>{renderBodyCols(item)}</tr>;
+    };
+    const renderHeaderCol = (item): JSX.Element => {
+        return <th 
+            key={item.field} 
+            scope="col" 
+            className={styles.tableHeaderCol}
+        >{item.field}</th>
+    }
     return (
         <>
             <table className={styles.table}>
                 <thead>
                     <tr>
-                    {mockHead.map((el, i) => <td key={i}>{el.field}</td>)}
+                        {mockHead.map(header => renderHeaderCol(header))}
                     </tr>
                 </thead>
                 <tbody>
-                    {mockData.map(el => <tr key={el.id}>{el.map(item => <td>{item}</td>)}</tr>)}
+                    {mockData.map(item => renderBodyRows(item))}
                 </tbody>
             </table>
         </>
