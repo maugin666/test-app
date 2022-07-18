@@ -101,7 +101,6 @@ const Table = ({
     state.filteredBy.field,
     state.filteredBy.value,
     state.pagination.currentPage,
-    setParameters,
   ])
 
   const renderBodyCols = (item: ContentItem): JSX.Element[] => {

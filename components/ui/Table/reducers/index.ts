@@ -100,8 +100,8 @@ const reducer = (state: State = initialState, action: Action): State => {
         },
         slicedItems: sortItems(
           state.slicedItems,
-          state.sortedBy.direction,
-          state.sortedBy.field
+          action.payload.direction,
+          action.payload.field
         ),
       }
     }
