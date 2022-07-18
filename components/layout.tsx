@@ -1,18 +1,23 @@
-import React, { FunctionComponent } from 'react';
-import Head from 'next/head';
-import styles from './layout.module.css';
-import Link from 'next/link';
+import React, { FunctionComponent } from 'react'
+import Head from 'next/head'
+import styles from './layout.module.css'
+import Link from 'next/link'
 
-export const siteTitle = 'Mini App';
+export const siteTitle = 'Test App'
 
 interface LayoutProps {
-  children?: JSX.Element | JSX.Element[];
-  home?: boolean;
-  headerName: string;
+  children?: JSX.Element | JSX.Element[]
+  home?: boolean
+  headerName: string
 }
 
-const Layout: FunctionComponent<LayoutProps> = ({ children, home, headerName }) => {
-    return <div className={styles.container}>
+const Layout: FunctionComponent<LayoutProps> = ({
+  children,
+  home,
+  headerName,
+}) => {
+  return (
+    <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content={siteTitle} />
@@ -30,8 +35,8 @@ const Layout: FunctionComponent<LayoutProps> = ({ children, home, headerName }) 
         <h3>{headerName}</h3>
       </header>
       <main>{children}</main>
-    </div>;
-  };
+    </div>
+  )
+}
 
-  export default Layout;
-  
+export default Layout

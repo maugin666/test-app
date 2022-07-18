@@ -1,21 +1,45 @@
-export const filterItems = (items: any[], field: string, value: string): any[] => {
-    console.log(items, field, value)
-    return items.filter(item => item[field].toLowerCase().includes(value.toLowerCase()))};
+import { ContentItem } from '../index'
 
-export const sortDirection = (direction: string): string => direction === 'asc' ? 'desc' : 'asc';
+export const filterItems = (
+  items: ContentItem[],
+  field: string,
+  value: string
+): ContentItem[] => {
+  return items.filter((item) => {
+    const itemField = item[field as keyof ContentItem].toString()
 
-export const sortItems = (items: any[], direction: string, field: string): any[] => items.sort((a, b) => {
+    return itemField.toLowerCase().includes(value.toLowerCase())
+  })
+}
+
+export const sortDirection = (direction: string): string =>
+  direction === 'asc' ? 'desc' : 'asc'
+
+export const sortItems = (
+  items: ContentItem[],
+  direction: string,
+  field: string
+): ContentItem[] =>
+  items.sort((a, b) => {
+    const first = a[field as keyof ContentItem]
+    const second = b[field as keyof ContentItem]
+
     if (sortDirection(direction) === 'asc') {
-        return a[field] < b[field] ? -1 : 1;
+      return first < second ? -1 : 1
     }
     if (sortDirection(direction) === 'desc') {
-        return a[field] > b[field] ? -1 : 1;
+      return first > second ? -1 : 1
     }
-    return 0;
-});
+    return 0
+  })
 
-export const sliceItems = (items: any[], currentPage: string, perPage: number): any[] => {
-    const firstPageIndex = (Number(currentPage) - 1) * perPage;
-    const lastPageIndex = firstPageIndex + perPage;
-    return items.slice(firstPageIndex, lastPageIndex);
-};
+export const sliceItems = (
+  items: ContentItem[],
+  currentPage: string,
+  perPage: number
+): ContentItem[] => {
+  const firstPageIndex = (Number(currentPage) - 1) * perPage
+  const lastPageIndex = firstPageIndex + perPage
+
+  return items.slice(firstPageIndex, lastPageIndex)
+}

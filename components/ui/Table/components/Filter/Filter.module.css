@@ -1,28 +1,28 @@
 .filterWrapper {
-    position: absolute;
-    right: 0;
-    bottom: 5px;
-    display: inline-block;
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  display: inline-block;
 }
 
 .filterPopup {
-    position: absolute;
-    right: 0;
-    z-index: 1;
-    width: 150px;
-    padding: 5px;
-    background: #fff;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  width: 150px;
+  padding: 5px;
+  background: #fff;
 }
 
 .input {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 
 .overflow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 }

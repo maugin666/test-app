@@ -1,7 +1,7 @@
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import Layout from '../components/layout';
-import styles from '../styles/Home.module.css';
+import type { NextPage } from 'next'
+import Link from 'next/link'
+import Layout from '../components/layout'
+import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   return (
@@ -15,4 +15,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home;
+export default Home

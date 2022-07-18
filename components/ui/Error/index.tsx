@@ -1,19 +1,20 @@
-import React from 'react';
-import styles from './Error.module.css';
+import React from 'react'
+import styles from './Error.module.css'
 
 interface ErrorProps {
-    error: {
-        code: number;
-        message: string;
-    }
+  error: {
+    code: number
+    message: string
+  }
 }
 
 const Error = (props: ErrorProps): JSX.Element => {
-    return (
+  return (
     <section className={styles.error}>
-        <h1>{props.error.code}</h1>
-        <p>{props.error.message}</p>
+      <h1>{props.error.code}</h1>
+      <p>{props.error.message}</p>
     </section>
-)};
+  )
+}
 
-export default Error;
+export default Error

@@ -16,12 +16,13 @@
   border-radius: 16px;
   font-size: 13px;
   width: 32px;
-  background: #C1BB83;
+  background: #c1bb83;
   cursor: pointer;
 }
-  
-.paginationButton:hover, .paginationButton.active {
-  background: #859F62;
+
+.paginationButton:hover,
+.paginationButton.active {
+  background: #859f62;
 }
 
 .paginationButton.active {
