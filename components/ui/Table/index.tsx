@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer } from "react";
 import styles from './Table.module.css';
 import reducer, { initialState } from './reducers/index';
-
+import Filter from './components/Filter';
+import HeadButton from './components/HeadButton';
 interface TableHeaderColumn {
     field: string;
     value: string;
@@ -10,7 +11,15 @@ interface TableHeaderColumn {
 }
 
 interface ContentItem {
-
+    id: number;
+    name: string;
+    age: number;
+    email: string;
+    birth_date: string;
+    application_date: string;
+    position_applied: string;
+    status: string;
+    year_of_experience: number;
 }
 interface TableProps {
     items: ContentItem[];
@@ -29,9 +38,10 @@ const Table = ({ headers, items }: TableProps): JSX.Element => {
         },
     });
     }, []);
-    const renderBodyCols = (item: TableHeaderColumn): JSX.Element[] => {
-        return headers.map(header => {
-            return <td key={header.field} className={styles.tableCell}>{item[header.field]}</td>
+    const renderBodyCols = (item: ContentItem): JSX.Element[] => {
+        return headers.map((header: TableHeaderColumn) => {
+            const name = header.field;
+            return <td key={header.field} className={styles.tableCell}>{item[name]}</td>
         });
     };
     const renderBodyRows = (item: ContentItem): JSX.Element => {
@@ -46,13 +56,18 @@ const Table = ({ headers, items }: TableProps): JSX.Element => {
             <span>{item.value}</span>
             {item.sortable && (
                 <div className={styles.sortWrapper}>
-                    <button 
-                        type='button'
-                        onClick={() => {
+                    <HeadButton 
+                        handleClick={() => {
                             dispatch({type: 'sort', payload: {field: item.field}});
                         }}
-                    >{state.sortedBy.field === item.field ? (state.sortedBy.direction === 'asc' ? '↓' : '↑') : '↓'}</button>
+                        content={state.sortedBy.field === item.field ? (state.sortedBy.direction === 'asc' ? '↓' : '↑') : '↓'}
+                    />
                 </div>
+            )}
+            {item.filterable && (
+                <Filter handleFilterChange={(value: string) => {
+                    dispatch({type: 'filter', payload: {field: item.field, value}});
+                }}/>
             )}
         </th>
     };
@@ -66,7 +81,7 @@ const Table = ({ headers, items }: TableProps): JSX.Element => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map(item => renderBodyRows(item))}
+                    {state.filteredItems.map((item: ContentItem) => renderBodyRows(item))}
                 </tbody>
             </table>
         </>
