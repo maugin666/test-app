@@ -3,6 +3,7 @@ import styles from './Table.module.css';
 import reducer, { initialState } from './reducers/index';
 import Filter from './components/Filter';
 import HeadButton from './components/HeadButton';
+import Pagination from './components/Pagination';
 interface TableHeaderColumn {
     field: string;
     value: string;
@@ -28,13 +29,15 @@ interface TableProps {
     perPage?: number;
 }
 
-const Table = ({ headers, items }: TableProps): JSX.Element => {
+const Table = ({ headers, items, pagination, perPage }: TableProps): JSX.Element => {
     const [state, dispatch] = useReducer(reducer, initialState);
     useEffect(() => {
         dispatch({
         type: 'init', 
         payload: {
             items,
+            enabled: pagination,
+            perPage: perPage
         },
     });
     }, []);
@@ -81,9 +84,17 @@ const Table = ({ headers, items }: TableProps): JSX.Element => {
                     </tr>
                 </thead>
                 <tbody>
-                    {state.filteredItems.map((item: ContentItem) => renderBodyRows(item))}
+                    {state.slicedItems.map((item: ContentItem) => renderBodyRows(item))}
                 </tbody>
             </table>
+            {pagination && <Pagination
+                currentPage={state.pagination.currentPage}
+                perPage={state.pagination.perPage}
+                pagesAmount={items.length}
+                onPageChange={(page: string) => {
+                    dispatch({type: 'page', payload: page});
+                }}
+            />}
         </>
     );
 };

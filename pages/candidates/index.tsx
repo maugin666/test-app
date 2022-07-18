@@ -59,7 +59,7 @@ const Candidates: NextPage = () => {
     <Layout headerName="Candidates">
         {!data?.error && !data?.data && <Loader />}
         {data?.error && <Error error={data.error} />}
-        {data?.data && <Table headers={headers} items={data.data.map(el => {
+        {data?.data && <Table pagination={true} perPage={10} headers={headers} items={data.data.map(el => {
             if (el.birth_date) {
                 el.age = getAge(el.birth_date);
             }
