@@ -1,0 +1,31 @@
+.table {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.table tr {
+    background: #FDF6EE;
+}
+
+.table tr:nth-child(even) {
+    background: #E0DEB9;
+}
+
+.tableHeaderCol {
+    position: relative;
+    display: table-cell;
+    padding: 10px;
+    background: #859F62;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.tableCell {
+    padding: 10px;
+    text-align: center;
+}
