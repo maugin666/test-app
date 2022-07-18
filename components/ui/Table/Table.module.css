@@ -29,3 +29,9 @@
     padding: 10px;
     text-align: center;
 }
+
+.sortWrapper {
+    position: absolute;
+    right: 0;
+    top: 5px;
+}
