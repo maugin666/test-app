@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
-import useSWR from 'swr';
 import Layout from '../../components/layout';
+import useSWR from 'swr';
 import Table from '../../components/ui/Table';
+import Error from '../../components/ui/Error';
+import Loader from '../../components/ui/Loader';
 
 const headers = [
     {
@@ -54,9 +56,9 @@ const Candidates: NextPage = () => {
     console.log(data)
     return (
     <Layout headerName="Candidates">
-        {!data?.error && !data?.data && <div>loading...</div>}
-        {data?.error && <div>error</div>}
-        <Table headers={headers} items={data.data}/>
+        {!data?.error && !data?.data && <Loader />}
+        {data?.error && <Error error={data.error} />}
+        {data?.data && <Table headers={headers} items={data.data}/>}
     </Layout>
     )
 };
