@@ -1,51 +1,34 @@
 import React from "react";
 import styles from './Table.module.css';
 
+interface TableHeaderColumn {
+    field: string;
+    value: string;
+    sortable: boolean;
+    filterable: boolean;
+}
 
-const Table = (props) => {
-    const mockData = [
-        {
-            id: 1,
-            name: 'Jon Snow',
-            email: 'qwerty'
-        },
-        {
-            id: 2,
-            name: 'Kitty Cat',
-            email: 'qwerty'
-        },
-        {
-            id: 3,
-            name: 'Death',
-            email: 'qwerty'
-        },
-        {
-            id: 4,
-            name: 'Funny bottle',
-            email: 'qwerty'
-        }
-    ];
-    const mockHead = [
-        {
-            field: 'id'
-        },
-        {
-            field: 'name'
-        },
-        {
-            field: 'email'
-        }
-    ];
+interface ContentItem {
 
-    const renderBodyCols = (item): JSX.Element => {
-        return mockHead.map(header => {
+}
+interface TableProps {
+    items: ContentItem[];
+    headers: TableHeaderColumn[];
+    pagination?: boolean;
+    perPage?: number;
+}
+
+const Table = ({ headers, items }: TableProps): JSX.Element => {
+
+    const renderBodyCols = (item: TableHeaderColumn): JSX.Element => {
+        return headers.map(header => {
             return <td key={header.field} className={styles.tableCell}>{item[header.field]}</td>
         });
     };
-    const renderBodyRows = (item): JSX.Element => {
+    const renderBodyRows = (item: ContentItem): JSX.Element => {
         return <tr key={item.id}>{renderBodyCols(item)}</tr>;
     };
-    const renderHeaderCol = (item): JSX.Element => {
+    const renderHeaderCol = (item: ContentItem): JSX.Element => {
         return <th 
             key={item.field} 
             scope="col" 
@@ -57,11 +40,11 @@ const Table = (props) => {
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        {mockHead.map(header => renderHeaderCol(header))}
+                        {headers.map(header => renderHeaderCol(header))}
                     </tr>
                 </thead>
                 <tbody>
-                    {mockData.map(item => renderBodyRows(item))}
+                    {items.map(item => renderBodyRows(item))}
                 </tbody>
             </table>
         </>
