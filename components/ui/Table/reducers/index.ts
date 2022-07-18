@@ -1,9 +1,5 @@
-import {
-  filterItems,
-  sortDirection,
-  sortItems,
-  sliceItems,
-} from '../utils/index'
+import { filterItems, sortItems, sliceItems } from '../utils/index'
+import { ContentItem } from '../index'
 
 export enum ActionKind {
   init = 'init',
@@ -11,9 +7,49 @@ export enum ActionKind {
   filter = 'filter',
   page = 'page',
 }
-interface Action {
-  type: ActionKind
-  payload: number | string | boolean
+
+interface InitAction {
+  type: ActionKind.init
+  payload: {
+    items: ContentItem[] | []
+    enabled: boolean | undefined
+    perPage: number | undefined
+  }
+}
+
+interface SetSortAction {
+  type: ActionKind.sort
+  payload: { field: string; direction: string }
+}
+
+interface SetFilterAction {
+  type: ActionKind.filter
+  payload: { field: string; value: string }
+}
+
+interface SetPageAction {
+  type: ActionKind.page
+  payload: { page: string }
+}
+
+type Action = InitAction | SetSortAction | SetFilterAction | SetPageAction
+
+interface State {
+  items: ContentItem[] | []
+  slicedItems: ContentItem[] | []
+  sortedBy: {
+    field: string
+    direction: string
+  }
+  filteredBy: {
+    field: string
+    value: string
+  }
+  pagination: {
+    enabled: boolean
+    perPage: number
+    currentPage: string
+  }
 }
 
 export const initialState = {
@@ -34,7 +70,7 @@ export const initialState = {
   },
 }
 
-const reducer = (state = initialState, action: Action) => {
+const reducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
     case ActionKind.init: {
       return {
@@ -60,8 +96,7 @@ const reducer = (state = initialState, action: Action) => {
         sortedBy: {
           ...state.sortedBy,
           field: action.payload.field,
-          direction:
-            action.payload.direction ?? sortDirection(state.sortedBy.direction),
+          direction: action.payload.direction,
         },
         slicedItems: sortItems(
           state.slicedItems,
@@ -101,12 +136,12 @@ const reducer = (state = initialState, action: Action) => {
         ...state,
         slicedItems: sliceItems(
           state.items,
-          action.payload,
+          action.payload.page,
           state.pagination.perPage
         ),
         pagination: {
           ...state.pagination,
-          currentPage: action.payload,
+          currentPage: action.payload.page,
         },
       }
     }

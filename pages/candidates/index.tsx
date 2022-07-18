@@ -59,18 +59,20 @@ const Candidates: NextPage = () => {
     fetcher
   )
 
-  const ageValue = data.data.map((el: ContentItem) => {
-    if (el.birth_date) {
-      el.age = getAge(el.birth_date)
-    }
-    return el
-  })
+  const ageValue =
+    data?.data &&
+    data.data.map((el: ContentItem) => {
+      if (el.birth_date) {
+        el.age = getAge(el.birth_date)
+      }
+      return el
+    })
 
   return (
     <Layout headerName="Candidates">
       {!data?.error && !data?.data && <Loader />}
       {data?.error && <Error error={data.error} />}
-      {data?.data && (
+      {ageValue && (
         <Table
           pagination={true}
           perPage={10}

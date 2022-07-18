@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react'
 import Router from 'next/router'
 
+interface Query {
+  sort?: string
+  filter?: string
+  field?: string
+  direction?: string
+  value?: string
+  page?: string
+}
+
 const useQuery = () => {
-  const [queries, setQueries] = useState({})
+  const [queries, setQueries] = useState<Query>({})
   const getParameters = () => {
     return Router.query
   }
-  const setParameters = (params: Object) => {
+  const setParameters = (params: { [key: string]: string }) => {
     Router.push({
       query: { ...queries, ...params },
     })

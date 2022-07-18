@@ -7,7 +7,7 @@ interface PaginationProps {
   currentPage: string
   perPage: number
   pagesAmount: number
-  onPageChange: (page: number) => void
+  onPageChange: (page: string) => void
 }
 
 const Pagination = (props: PaginationProps): JSX.Element | null => {
@@ -28,7 +28,7 @@ const Pagination = (props: PaginationProps): JSX.Element | null => {
       {paginationRange.map((item) => (
         <li
           key={item}
-          onClick={() => onPageChange(item)}
+          onClick={() => onPageChange(item.toString())}
           className={cn({
             [styles.paginationButton]: true,
             [styles.active]: parsedCurrentPage === item,

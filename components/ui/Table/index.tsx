@@ -5,6 +5,7 @@ import Filter from './components/Filter'
 import HeadButton from './components/HeadButton'
 import Pagination from './components/Pagination'
 import useQuery from '../../../hooks/useQuery'
+import { sortDirection } from './utils'
 
 interface TableHeaderColumn {
   field: string
@@ -42,7 +43,7 @@ const Table = ({
 
   useEffect(() => {
     dispatch({
-      type: 'init',
+      type: ActionKind.init,
       payload: {
         items,
         enabled: pagination,
@@ -52,11 +53,11 @@ const Table = ({
   }, [])
 
   useEffect(() => {
-    console.log(queries)
     pagination && !queries.page && setParameters({ page: '1' })
     !queries.direction && setParameters({ direction: 'asc' })
+
     if (queries.page) {
-      dispatch({ type: ActionKind.page, payload: queries.page })
+      dispatch({ type: ActionKind.page, payload: { page: queries.page } })
     }
     if (queries.filter && queries.value) {
       dispatch({
@@ -100,6 +101,7 @@ const Table = ({
     state.filteredBy.field,
     state.filteredBy.value,
     state.pagination.currentPage,
+    setParameters,
   ])
 
   const renderBodyCols = (item: ContentItem): JSX.Element[] => {
@@ -107,7 +109,7 @@ const Table = ({
       const name = header.field
       return (
         <td key={header.field} className={styles.tableCell}>
-          {item[name]}
+          {item[name as keyof ContentItem]}
         </td>
       )
     })
@@ -125,7 +127,10 @@ const Table = ({
               handleClick={() => {
                 dispatch({
                   type: ActionKind.sort,
-                  payload: { field: item.field },
+                  payload: {
+                    field: item.field,
+                    direction: sortDirection(state.sortedBy.direction),
+                  },
                 })
               }}
               content={
@@ -151,7 +156,7 @@ const Table = ({
       </th>
     )
   }
-  console.log(state)
+
   return (
     <>
       <table className={styles.table}>
@@ -172,7 +177,7 @@ const Table = ({
           perPage={state.pagination.perPage}
           pagesAmount={items.length}
           onPageChange={(page: string) => {
-            dispatch({ type: ActionKind.page, payload: page })
+            dispatch({ type: ActionKind.page, payload: { page } })
           }}
         />
       )}
